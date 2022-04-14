@@ -75,6 +75,10 @@ const App = () => {
     );
   };
 
+  const handleRemove = (id) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
   const addTodo = (todo) => {
     setTodos([...todos, todo]);
   };
@@ -83,7 +87,11 @@ const App = () => {
       <header>
         <h1>Todo</h1>
       </header>
-      <TodoList todos={todos} handleCompleted={handleCompleted} />
+      <TodoList
+        todos={todos}
+        handleCompleted={handleCompleted}
+        handleRemove={handleRemove}
+      />
       <TodoForm
         todo={todo}
         handleChange={handleChange}
