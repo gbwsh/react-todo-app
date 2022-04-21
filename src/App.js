@@ -25,7 +25,6 @@ const App = () => {
     e.preventDefault();
     if (todo.task.trim()) {
       addTodo(todo);
-      console.log(todo);
       setTodo({ task: "", completed: false, id: uuidv() });
     }
   };
@@ -37,9 +36,12 @@ const App = () => {
         return { ...todo, completed: !todo.completed };
       })
     );
+    console.log(id);
+    setTimeout(() => handleRemove(id), 2000);
   };
 
   const handleRemove = (id) => {
+    console.log(id);
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
