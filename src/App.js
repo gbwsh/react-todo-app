@@ -34,6 +34,7 @@ const App = () => {
   //   setTimeout(() => handleRemove(removalQueue[0]), 2000);
 
   const test = (id) => {
+    debugger;
     console.log(queue);
     setQueue(queue.push(id));
   };
