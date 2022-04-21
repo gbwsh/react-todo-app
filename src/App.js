@@ -5,6 +5,7 @@ import TodoList from "./components/TodoList";
 import { v4 as uuidv } from "uuid";
 
 const App = () => {
+  const [queue, setQueue] = useState([]);
   const [todo, setTodo] = useState({
     task: "",
     completed: false,
@@ -29,6 +30,14 @@ const App = () => {
     }
   };
 
+  // const initTimeout = () =>
+  //   setTimeout(() => handleRemove(removalQueue[0]), 2000);
+
+  const test = (id) => {
+    console.log(queue);
+    setQueue(queue.push(id));
+  };
+
   const handleCompleted = (id) => {
     setTodos(
       todos.map((todo) => {
@@ -36,12 +45,16 @@ const App = () => {
         return { ...todo, completed: !todo.completed };
       })
     );
-    console.log(id);
-    setTimeout(() => handleRemove(id), 2000);
+    // console.log(id);
+    // initTimeout();
+    test(id);
+    console.log(queue);
+    setTimeout(() => handleRemove(queue[0]), 1000);
+    // setTimeout(() => handleRemove(id), 2000);
   };
 
   const handleRemove = (id) => {
-    console.log(id);
+    // console.log(id);
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 

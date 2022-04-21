@@ -5,9 +5,9 @@ const TodoList = ({ todos, handleCompleted, handleRemove }) => {
   return (
     <div>
       <ul>
-        {todos.map((todo, index) => (
+        {todos.map((todo) => (
           <Todo
-            key={index}
+            key={todo.id}
             todo={todo}
             handleCompleted={handleCompleted}
             handleRemove={handleRemove}
