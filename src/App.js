@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import TodoForm from "./components/TodoForm";
 import TodoList from "./components/TodoList";
@@ -12,11 +12,16 @@ const App = () => {
     id: uuidv(),
   });
 
-  const [todos, setTodos] = useState([
-    { task: "test1", completed: false, id: "1" },
-    { task: "test2", completed: false, id: "2" },
-    { task: "test3", completed: false, id: "3" },
-  ]);
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  });
+
+  const [todos, setTodos] = useState(() => {
+    const savedTodos = localStorage.getItem("todos");
+    if (savedTodos) {
+      return JSON.parse(savedTodos);
+    } else return [];
+  });
 
   const handleChange = (e) => {
     setTodo({ ...todo, task: e.target.value });
@@ -30,15 +35,6 @@ const App = () => {
     }
   };
 
-  // const initTimeout = () =>
-  //   setTimeout(() => handleRemove(removalQueue[0]), 2000);
-
-  const test = (id) => {
-    debugger;
-    console.log(queue);
-    setQueue(queue.push(id));
-  };
-
   const handleCompleted = (id) => {
     setTodos(
       todos.map((todo) => {
@@ -46,22 +42,17 @@ const App = () => {
         return { ...todo, completed: !todo.completed };
       })
     );
-    // console.log(id);
-    // initTimeout();
-    test(id);
-    console.log(queue);
-    setTimeout(() => handleRemove(queue[0]), 1000);
-    // setTimeout(() => handleRemove(id), 2000);
+    handleRemove(id);
   };
 
   const handleRemove = (id) => {
-    // console.log(id);
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
   const addTodo = (todo) => {
     setTodos([...todos, todo]);
   };
+
   return (
     <div>
       <header>
@@ -77,6 +68,16 @@ const App = () => {
         handleChange={handleChange}
         handleSubmit={handleSubmit}
       />
+      <button onClick={(e) => localStorage.clear()}>Clear localStorage</button>
+      {/* <button
+        onClick={(e) => localStorage.setItem("todos", JSON.stringify(todos))}
+      >
+        Save localStorage
+      </button> */}
+      <button onClick={(e) => console.log(todos)}>Log todos</button>
+      <button onClick={(e) => console.log(localStorage)}>
+        Log localStorage
+      </button>
     </div>
   );
 };
